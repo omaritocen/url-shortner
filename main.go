@@ -1,21 +1,20 @@
 package main
 
 import (
-	"os"
-	"url-shortner/model"
-
 	"github.com/gin-gonic/gin"
+	"os"
+	"url-shortner/compression"
+	"url-shortner/db"
 )
 
 func main() {
 
-	db := model.Database()
-	db.DB()
+	db.Init()
 
 	r := gin.Default()
 
-	r.POST("/shorten", shortenUrl)
-	r.GET("/tiny/:shortUrl", getUrl)
+	r.POST("/shorten", compression.ShortenUrl)
+	r.GET("/tiny/:shortUrl", compression.GetUrl)
 
 	err := r.Run()
 	if err != nil {
